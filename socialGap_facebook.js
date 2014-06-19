@@ -1,23 +1,23 @@
 /*********************************************************************************
- * The MIT License																 *
- *																				 *
- * Copyright (c) 2013 YanchWare ( https://www.yanchware.com  )					 *
- * by: Angelo Agatino Nicolosi - angelo.nicolosi[at]yanchware.com				 *
- * 																				 *
- * Permission is hereby granted, free of charge, to any person obtaining a copy	 *
- * of this software and associated documentation files (the "Software"), to deal *
- * in the Software without restriction, including without limitation the rights	 *
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell	 *
- * copies of the Software, and to permit persons to whom the Software is		 *
- * furnished to do so, subject to the following conditions: 					 *
- *																				 *
- * The above copyright notice and this permission notice shall be included in	 *
- * all copies or substantial portions of the Software.							 *
- *																				 *
+ * The MIT License																 
+ *																				 
+ * Copyright (c) 2013 YanchWare ( https://www.yanchware.com  )					 
+ * by: Angelo Agatino Nicolosi - angelo.nicolosi[at]yanchware.com				 
+ * 																				 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy	 
+ * of this software and associated documentation files (the "Software"), to deal 
+ * in the Software without restriction, including without limitation the rights	 
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell	 
+ * copies of the Software, and to permit persons to whom the Software is		 
+ * furnished to do so, subject to the following conditions: 					 
+ *																				 
+ * The above copyright notice and this permission notice shall be included in	 
+ * all copies or substantial portions of the Software.							 
+ *																				 
  ********[ Facebook plugin ]******************************************************
- *																				 *
- *	Requirements: modernizer.js													 *
- *																				 *
+ *																				 
+ *	Requirements: modernizer.js													 
+ *																				 
  *********************************************************************************/
 
 var SocialGap = (function (socialGap) {
@@ -33,13 +33,13 @@ var SocialGap = (function (socialGap) {
 	};
 
 	/*----------------------------------------------------------------------*/
-	/* Public fields														*/
+	/* Public fields
 	/*----------------------------------------------------------------------*/
 	socialGap.CODE_OK = 0;
 	socialGap.CODE_ERROR = 1;
 
 	/*----------------------------------------------------------------------*/
-	/* Public Method: Facebook_Init											*/
+	/* Public Method: Facebook_Init
 	/*----------------------------------------------------------------------*/
 	socialGap.Facebook_PerformLogon = function (onSuccess, onFailure) {
 		if(!isFunction(onSuccess) || !isFunction(onFailure))
@@ -82,7 +82,7 @@ var SocialGap = (function (socialGap) {
 	}
 
 	/*----------------------------------------------------------------------*/
-	/* Private Functions													*/
+	/* Private Functions
 	/*----------------------------------------------------------------------*/
 	
 	function extendAccessToken(url, onSuccess, onFailure)
