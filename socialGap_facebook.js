@@ -85,16 +85,16 @@ var SocialGap = (function (socialGap) {
     }
 
 	/*----------------------------------------------------------------------*/
-	/* Private Method: isFunction											*/
+	/* Private Functions													*/
 	/*----------------------------------------------------------------------*/
 	
 	function extendAccessToken(url, onSuccess, onFailure)
 	{
-        var arrayUrl = url.split("access_token=");
-        if (arrayUrl.length > 0) {
-        	shortLivedToken = arrayUrl[1].split("&")[0];
-            checkAndExtendToken(shortLivedToken, onSuccess, onFailure);
-        }
+		var arrayUrl = url.split("access_token=");
+		if (arrayUrl.length > 0) {
+			shortLivedToken = arrayUrl[1].split("&")[0];
+			checkAndExtendToken(shortLivedToken, onSuccess, onFailure);
+		}
 	};
 	
 	function checkAndExtendToken(shortLivedToken, onSuccess, onFailure)
@@ -111,11 +111,11 @@ var SocialGap = (function (socialGap) {
 		xhr.send();
 	};
 	
-    function isFunction(functionToCheck) 
-    {
-        var getType = {};
-        return functionToCheck && getType.toString.call(functionToCheck) == "[object Function]";
-    };
+	function isFunction(functionToCheck) 
+	{
+		var getType = {};
+		return functionToCheck && getType.toString.call(functionToCheck) == "[object Function]";
+	};
 
 	function isExtendedTokenAvailable()
 	{
