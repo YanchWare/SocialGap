@@ -22,7 +22,7 @@
 
 var SocialGap = (function (socialGap) {
 
-    var facebook_graph = "https://graph.facebook.com";
+	var facebook_graph = "https://graph.facebook.com";
 
 	/* !!! Modify the following settings !!! */
 	var settings = {
@@ -65,17 +65,17 @@ var SocialGap = (function (socialGap) {
 		//Hooking listeners
 		ref.addEventListener("loadstart", function (event) {
 			extendAccessToken(event.url, onSuccess, onFailure);
-        });
+		});
         
 		ref.addEventListener("loadstop", function (event) {
 			ref.close();
 			onFailure();
-        });
+		});
         
 		ref.addEventListener("loaderror", function (event) {
 			ref.close();
 			onFailure();
-        });
+		});
 
 		ref.addEventListener("exit", function (event) {});
 
