@@ -23,10 +23,6 @@
 var SocialGap = (function (socialGap) {
 
     var facebook_graph = "https://graph.facebook.com";
-    var facebook_token = "";
-    var ref;
-    var ref_logout;
-    var _hasLogin = false;
 
 	/* !!! Modify the following settings !!! */
 	var settings = {
@@ -68,21 +64,22 @@ var SocialGap = (function (socialGap) {
         
 		//Hooking listeners
 		ref.addEventListener("loadstart", function (event) {
-            extendAccessToken(event.url, onSuccess, onFailure);
+			extendAccessToken(event.url, onSuccess, onFailure);
         });
         
 		ref.addEventListener("loadstop", function (event) {
-        	onFailure();
+			ref.close();
+			onFailure();
         });
         
 		ref.addEventListener("loaderror", function (event) {
-            ref.close();
-            onFailure();
+			ref.close();
+			onFailure();
         });
 
-        ref.addEventListener("exit", function (event) {});
+		ref.addEventListener("exit", function (event) {});
 
-    }
+	}
 
 	/*----------------------------------------------------------------------*/
 	/* Private Functions													*/
