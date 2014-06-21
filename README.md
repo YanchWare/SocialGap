@@ -26,10 +26,15 @@ In order to make the example work follow these steps:
 <ol>
 	<li> Create a new PhoneGap app typing something similar to:<br>
    		<code>phonegap create YourApp/ com.whatever.yourapp YourApp</code></li>
-		<li> Copy the files contained in the example folder into the www folder of the project you've just reated</li>
+		<li> Copy the files contained in the <emph>example</emph> folder into the <emph>www</emph> folder of the project you've just created</li>
+		<li> Copy the folder <emph>Social Gap</emph> contained under the <emph>lib</emph> directory into the folder <emph>www/js</emph> of the project you have just created.</li>
+		<li>Set the required settings in the modules (for instance in socialGap_facebook.js).</li>
+		<li>Install the inAppBrowser plugin for your project, typing these commands:
+			<pre><code>cd YourApp
+			cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git</code></pre>			
+		</li>
 		<li> 
-			Run the project for the platform you like most. For instance type:<br/>
-   			<pre><code>cd YourApp
-phonegap run android</code></pre>
+			Run the project for the platform you like most. For instance type the following command from within <emph>YourApp</emph> directory:<br/>
+   			<code>phonegap run android</code>
 		</li>
 </ol>
