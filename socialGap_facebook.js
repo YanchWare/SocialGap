@@ -23,6 +23,8 @@
 var SocialGap = (function (socialGap) {
 
 	var facebook_graph = "https://graph.facebook.com";
+	var processing = true;
+	var LS_TOKEN_KEY = "SocialGap_Facebook_Token";
 
 	/* !!! Modify the following settings !!! */
 	var settings = {
@@ -48,9 +50,21 @@ var SocialGap = (function (socialGap) {
 		}
 
 		//If ExtendedToken is available just use it
-		if(isExtendedTokenAvailable())
-			onSuccess(getStoredExtendedToken());
-
+		getStoredExtendedToken(function(isValidToken){
+			if(!isValidToken)
+			{
+				localStorage.removeItem(LS_TOKEN_KEY);
+				socialGap.CurrentFBToken = "";
+			  	getNewExtendedToken(onSuccess, onFailure);
+			}else
+			{
+				onSuccess(socialGap.CurrentFBToken);
+			}
+		});
+	}
+	
+	function getNewExtendedToken(onSuccess, onFailure)
+	{
 		//Procedure for requiring an extended token:
 		//1. create a short-lived access token
 		//2. extend it to a long-lived access token. This step SHOULD be implemented on the server and not here in the client.
@@ -67,6 +81,7 @@ var SocialGap = (function (socialGap) {
 			var shortLivedToken = extractTokenFromString(event.url);
 			if(shortLivedToken != null)
 				checkAndExtendToken(shortLivedToken);	
+			else processing = false;	
 		});
 
 		ref.addEventListener("loadstop", function (event) {
@@ -75,7 +90,7 @@ var SocialGap = (function (socialGap) {
 
 		ref.addEventListener("loaderror", function (event) {
 			ref.close();
-			onFailure('ERROR');
+			onFailure();
 		});
 
 		ref.addEventListener("exit", function (event) {
@@ -93,7 +108,7 @@ var SocialGap = (function (socialGap) {
 	{
 		if(!processing && socialGap.CurrentFBToken.length <= 0)
 		{
-			onFailure('Output!');
+			onFailure();
 			return;
 		}
 
@@ -189,22 +204,32 @@ var SocialGap = (function (socialGap) {
 		var getType = {};
 		return functionToCheck && getType.toString.call(functionToCheck) == "[object Function]";
 	};
-
-	function isExtendedTokenAvailable()
+	
+	/** Utility - get the stored long-lived token if any and check its validity */
+	function getStoredExtendedToken(callback)
 	{
-		//TODO: Implement get from localCache and check that token is still valid
-		return false;
+		if (typeof(Modernizr) != "undefined" && Modernizr.localstorage) {
+			// window.localStorage is available!
+		  	var token = localStorage.getItem(LS_TOKEN_KEY);
+		  	if(token != null)
+			{
+				socialGap.CurrentFBToken = token;
+				checkToken(token, callback);
+			}
+			else callback(false);
+		} else {
+		  // no native support for HTML5 storage :(
+		  //TODO: maybe try dojox.storage or a third-party solution
+		  callback(false);
+		}
 	};
 
-	function getStoredExtendedToken()
-	{
-		//TODO: Implement
-		return "";
-	};
-
+	/** Utility - store new long-lived token in localStorage */
 	function storeExtendedToken(longLivedToken)
 	{
-		//TODO: Implement
+		if (typeof(Modernizr) != "undefined" && Modernizr.localstorage) {
+			localStorage.setItem(LS_TOKEN_KEY, longLivedToken);
+		}
 	};
 
 
