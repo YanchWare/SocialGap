@@ -31,7 +31,7 @@ In order to make the example work follow these steps:
 		<li>Set the required settings in the modules (for instance in socialGap_facebook.js).</li>
 		<li>Install the inAppBrowser plugin for your project, typing these commands:
 			<pre><code>cd YourApp
-			cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git</code></pre>			
+cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git</code></pre>			
 		</li>
 		<li> 
 			Run the project for the platform you like most. For instance type the following command from within <emph>YourApp</emph> directory:<br/>
