@@ -30,6 +30,6 @@ In order to make the example work follow these steps:
 		<li> 
 			Run the project for the platform you like most. For instance type:<br/>
    			<pre><code>cd YourApp
-    		phonegap run android</code></pre>
+phonegap run android</code></pre>
 		</li>
 </ol>
