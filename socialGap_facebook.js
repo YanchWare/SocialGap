@@ -35,11 +35,10 @@ var SocialGap = (function (socialGap) {
 	/*----------------------------------------------------------------------*/
 	/* Public fields
 	/*----------------------------------------------------------------------*/
-	socialGap.CODE_OK = 0;
-	socialGap.CODE_ERROR = 1;
+	socialGap.CurrentFBToken = "";
 
 	/*----------------------------------------------------------------------*/
-	/* Public Method: Facebook_Init
+	/* Public Method: Facebook_PerformLogon
 	/*----------------------------------------------------------------------*/
 	socialGap.Facebook_PerformLogon = function (onSuccess, onFailure) {
 		if(!isFunction(onSuccess) || !isFunction(onFailure))
@@ -47,67 +46,144 @@ var SocialGap = (function (socialGap) {
 			console.log("[SocialGap for Facebook] Illegal arguments. Call back functions are not defined.");
 			return;
 		}
-		
+
 		//If ExtendedToken is available just use it
 		if(isExtendedTokenAvailable())
 			onSuccess(getStoredExtendedToken());
 
 		//Procedure for requiring an extended token:
 		//1. create a short-lived access token
-		//2. extend it to a long-lived access token
-				
+		//2. extend it to a long-lived access token. This step SHOULD be implemented on the server and not here in the client.
+		//For production usage, perform this call from your servers. More information: https://developers.facebook.com/docs/facebook-login/access-tokens
+
 		//1. Creating short-lived access token
-		var authorize_url = facebook_graph + "/oauth/authorize?type=user_agent&client_id=" + config.app_id + "&redirect_uri=" + 
-							config.host + "/connect/login_success.html&display=touch&scope=" + config.scope;
-		
+		var authorize_url = facebook_graph + "/oauth/authorize?type=user_agent&client_id=" + settings.appID + "&redirect_uri=" + 
+							settings.appDomain + "/connect/login_success.html&display=touch&scope=" + settings.scopes;
+
 		ref = window.open(authorize_url, "_blank", "location=no");
-        
+
 		//Hooking listeners
 		ref.addEventListener("loadstart", function (event) {
-			extendAccessToken(event.url, onSuccess, onFailure);
-		});
-        
-		ref.addEventListener("loadstop", function (event) {
-			ref.close();
-			onFailure();
-		});
-        
-		ref.addEventListener("loaderror", function (event) {
-			ref.close();
-			onFailure();
+			var shortLivedToken = extractTokenFromString(event.url);
+			if(shortLivedToken != null)
+				checkAndExtendToken(shortLivedToken);	
 		});
 
-		ref.addEventListener("exit", function (event) {});
+		ref.addEventListener("loadstop", function (event) {
+			ref.close();
+		});
+
+		ref.addEventListener("loaderror", function (event) {
+			ref.close();
+			onFailure('ERROR');
+		});
+
+		ref.addEventListener("exit", function (event) {
+			checkOutput(onSuccess, onFailure);
+		});
 
 	}
 
 	/*----------------------------------------------------------------------*/
 	/* Private Functions
 	/*----------------------------------------------------------------------*/
-	
-	function extendAccessToken(url, onSuccess, onFailure)
+
+	/** Wait for completition of the async calls against the facebook Graph API */	
+	function checkOutput(onSuccess, onFailure)
 	{
-		var arrayUrl = url.split("access_token=");
-		if (arrayUrl.length > 0) {
-			shortLivedToken = arrayUrl[1].split("&")[0];
-			checkAndExtendToken(shortLivedToken, onSuccess, onFailure);
+		if(!processing && socialGap.CurrentFBToken.length <= 0)
+		{
+			onFailure('Output!');
+			return;
 		}
+
+		if(socialGap.CurrentFBToken.length > 0)
+		{
+			onSuccess(socialGap.CurrentFBToken);
+			return;
+		}
+
+		window.setTimeout(function(){
+			checkOutput(onSuccess, onFailure);
+		}, 100);
+	}
+
+	/** Checks a token and if it is valid extends its time to live */
+	function checkAndExtendToken(shortLivedToken)
+	{
+		processing = true;
+		checkToken(shortLivedToken, function(isValidToken){
+			if(isValidToken)
+				extendToken(shortLivedToken);
+			else processing = false;
+		});		
 	};
-	
-	function checkAndExtendToken(shortLivedToken, onSuccess, onFailure)
+
+	/** Checks the validity of the token in input */
+	function checkToken(token, callback)
 	{
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", facebook_graph + "/me?access_token=" + shortLivedToken, true);
+		xhr.open("GET", facebook_graph + "/me?access_token=" + token, true);
 		xhr.onreadystatechange = function() {
-			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			if (xhr.readyState==4)
 			{
-				alert('Ready to request new token');
+				if(xhr.status!=200)
+				{
+					callback(false);
+					return;
+				}
+
+				//The token works!
+				callback(true);				
 			}
-			else onFailure();
 		};
 		xhr.send();
+	}
+
+	/** Transforms a short-lived token in a long-lived one. */
+	function extendToken(shortLivedToken)
+	{
+		processing = true;
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", facebook_graph + "/oauth/access_token?grant_type=fb_exchange_token&client_id="+ settings.appID +"&client_secret=" + 
+						settings.appSecret + "&fb_exchange_token=" + shortLivedToken, true);
+
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState==4)
+			{
+				if(xhr.status!=200)
+				{
+					processing = false;
+					return;
+				}
+					
+				processing = true;
+				var longLivedToken = extractTokenFromString(xhr.responseText);
+				if(longLivedToken != null)
+				{
+					checkToken(longLivedToken, function(isValidToken){
+						if(isValidToken)
+						{
+							socialGap.CurrentFBToken = longLivedToken;
+							storeExtendedToken(longLivedToken);
+						}	else processing = false;
+					});
+				} else processing = false;
+			}
+		};
+		xhr.send();				
+	}
+
+	/** Utility - extracts token from the input string */
+	function extractTokenFromString(tokenStr)
+	{
+		var tokenArr = tokenStr.split("access_token=");
+		if (tokenArr.length > 1 && tokenArr[1].indexOf('&') >= 0 ) {
+			return tokenArr[1].split("&")[0];
+		}else return null;
 	};
-	
+
+	/** Utility - checks if the element in input is a function */
 	function isFunction(functionToCheck) 
 	{
 		var getType = {};
@@ -119,15 +195,19 @@ var SocialGap = (function (socialGap) {
 		//TODO: Implement get from localCache and check that token is still valid
 		return false;
 	};
-	
+
 	function getStoredExtendedToken()
 	{
 		//TODO: Implement
 		return "";
 	};
-	
-	
-	
+
+	function storeExtendedToken(longLivedToken)
+	{
+		//TODO: Implement
+	};
+
+
 	return socialGap;
 
 
