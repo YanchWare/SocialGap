@@ -25,9 +25,9 @@ If you do not have it already, you can install the inAppBrowser plugin by typing
 
 Once the prerequisites are in place, reference the following js files from your html page:
 <pre>
-	<code><script type="text/javascript" src="js/modernizr.js"></script>
-    <script type="text/javascript" src="js/SocialGap/socialGap.js"></script>
-    <script type="text/javascript" src="js/SocialGap/socialGap_facebook.js"></script>
+	<code>&lt;script type=&quot;text/javascript&quot; src=&quot;js/modernizr.js&quot;&gt;&lt;/script&gt;
+	&lt;script type=&quot;text/javascript&quot; src=&quot;js/SocialGap/socialGap.js&quot;&gt;&lt;/script&gt;
+	&lt;script type=&quot;text/javascript&quot; src=&quot;js/SocialGap/socialGap_facebook.js&quot;&gt;&lt;/script&gt;
     </code>
 </pre>
 
