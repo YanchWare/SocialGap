@@ -50,12 +50,12 @@ From now on the setup procedure differ based on the module you would like to use
 		Fill out the required settings in the file called <code>socialGap_facebook.js</code>.<br>
 		You need to modify the object called <code>settings</code> that looks like the following:<br>
 		<pre><code>/* !!! Modify the following settings !!! */
-		var settings = {
-			appID: "123456789012345",
-			appSecret: "12345678901234567890123456789012",
-			appDomain: "http://yanchware.com",
-			scopes: "email,publish_stream"
-		};
+	var settings = {
+		appID: "123456789012345",
+		appSecret: "12345678901234567890123456789012",
+		appDomain: "http://yanchware.com",
+		scopes: "email,publish_stream"
+	};
 		</code></pre><br>
 		
 		Then prepare two callback functions.<br>
@@ -66,13 +66,13 @@ From now on the setup procedure differ based on the module you would like to use
 			alert(token);
 		},
 
-		fbLogonFailure: function(){
-			alert('Fail');
-		}
+	fbLogonFailure: function(){
+		alert('Fail');
+	}
 		</code></pre>
 		
 		Once ready build a link that will start the authentication process.
-		<pre><code>&lt;a onclick=&quot;SocialGap.Facebook_PerformLogon(app.fbLogonSuccess, app.fbLogonFailure);&quot;&gt;Facebook&lt;/a&gt;</pre></code>
+		<pre><code>&lt;a onclick=&quot;SocialGap.Facebook_PerformLogon(fbLogonSuccess, fbLogonFailure);&quot;&gt;Facebook&lt;/a&gt;</pre></code>
 		
 	</li>
 </ul>
