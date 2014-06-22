@@ -43,6 +43,22 @@ This should look something like the following:
 	</code>
 </pre>
 
+From now on the setup procedure differ based on the module you would like to use.
+
+<ul>
+	<li><b>Facebook</b>:<br>
+		Fill out the required settings in the file called <code>socialGap_facebook.js</code>. You need to modify the object called <code>settings</code> that looks like the following:<br>
+		<code>/* !!! Modify the following settings !!! */
+		var settings = {
+			appID: "",
+			appSecret: "",
+			appDomain: "",
+			scopes: ""
+		};
+		</code>
+	</li>
+</ul>
+
 Develop an extension
 ---------------------
 Developing an extension is quite straightforward. <br>
