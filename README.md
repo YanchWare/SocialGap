@@ -49,7 +49,7 @@ From now on the setup procedure differ based on the module you would like to use
 	<li><b>Facebook</b>:<br>
 		Fill out the required settings in the file called <code>socialGap_facebook.js</code>.<br>
 		You need to modify the object called <code>settings</code> that looks like the following:<br>
-		<pre><code>/* !!! Modify the following settings !!! */
+		<pre><code>	/* !!! Modify the following settings !!! */
 	var settings = {
 		appID: "123456789012345",
 		appSecret: "12345678901234567890123456789012",
@@ -61,10 +61,10 @@ From now on the setup procedure differ based on the module you would like to use
 		Then prepare two callback functions.<br>
 		One of them will be called in case of success receiving as parameter the facebook access token.<br>
 		Instead, the other will be called in case of failure.
-		<pre><code>fbLogonSuccess: function(accessToken)
-		{
-			alert(token);
-		},
+		<pre><code>	fbLogonSuccess: function(accessToken)
+	{
+		alert(token);
+	},
 
 	fbLogonFailure: function(){
 		alert('Fail');
