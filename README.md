@@ -61,7 +61,7 @@ From now on the setup procedure differ based on the module you would like to use
 		Then prepare two callback functions.<br>
 		One of them will be called in case of success receiving as parameter the facebook access token.<br>
 		Instead, the other will be called in case of failure.
-		<pre><code>		fbLogonSuccess: function(accessToken)
+		 <pre><code>	fbLogonSuccess: function(accessToken)
 	{
 		alert(token);
 	},
