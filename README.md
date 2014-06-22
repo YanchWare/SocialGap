@@ -31,6 +31,18 @@ Once the prerequisites are in place, reference the following js files from your 
     </code>
 </pre>
 
+Then notify the SocialGap library that the <code>onDeviceReady</code> event has been received.
+This should look something like the following:
+
+<pre>
+	<code>onDeviceReady: function() {
+		...
+		SocialGap.deviceReady = true;
+		....
+    }
+	</code>
+</pre>
+
 Develop an extension
 ---------------------
 Developing an extension is quite straightforward. <br>
