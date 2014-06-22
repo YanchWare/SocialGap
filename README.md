@@ -47,15 +47,16 @@ From now on the setup procedure differ based on the module you would like to use
 
 <ul>
 	<li><b>Facebook</b>:<br>
-		Fill out the required settings in the file called <code>socialGap_facebook.js</code>. You need to modify the object called <code>settings</code> that looks like the following:<br>
-		<code>/* !!! Modify the following settings !!! */
+		Fill out the required settings in the file called <code>socialGap_facebook.js</code>.<br>
+		You need to modify the object called <code>settings</code> that looks like the following:<br>
+		<pre><code>/* !!! Modify the following settings !!! */
 		var settings = {
 			appID: "",
 			appSecret: "",
 			appDomain: "",
 			scopes: ""
 		};
-		</code>
+		</code></pre>
 	</li>
 </ul>
 
