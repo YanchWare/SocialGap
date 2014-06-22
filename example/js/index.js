@@ -47,7 +47,7 @@ var app = {
 
 	fbLogonSuccess: function(accessToken)
 	{
-		alert(token);
+		alert(accessToken);
 	},
 	
 	fbLogonFailure: function(){
