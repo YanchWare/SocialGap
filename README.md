@@ -24,14 +24,14 @@ If you do not have it already, you can install the inAppBrowser plugin by typing
 <code>cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git</code> <br>
 
 Once the prerequisites are in place, reference the following js files from your html page:
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;js/modernizr.js&quot;&gt;&lt;/script&gt;
+ <pre><code>	&lt;script type=&quot;text/javascript&quot; src=&quot;js/modernizr.js&quot;&gt;&lt;/script&gt;
 	&lt;script type=&quot;text/javascript&quot; src=&quot;js/SocialGap/socialGap.js&quot;&gt;&lt;/script&gt;
 	&lt;script type=&quot;text/javascript&quot; src=&quot;js/SocialGap/socialGap_facebook.js&quot;&gt;&lt;/script&gt;</code></pre>
 
 Then notify the SocialGap library that the <code>onDeviceReady</code> event has been received.
 This should look something like the following:
 
-<pre><code>onDeviceReady: function() {
+ <pre><code>	onDeviceReady: function() {
 		...
 		SocialGap.deviceReady = true;
 		....
