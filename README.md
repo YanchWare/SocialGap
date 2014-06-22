@@ -64,7 +64,7 @@ From now on the setup procedure differ based on the module you would like to use
 		 <pre><code>	fbLogonSuccess: function(accessToken)
 	{
 		alert(token);
-	},
+	}
 
 	fbLogonFailure: function(){
 		alert('Fail');
@@ -72,7 +72,10 @@ From now on the setup procedure differ based on the module you would like to use
 		</code></pre>
 		
 		Once ready build a link that will start the authentication process.
-		<pre><code>&lt;a onclick=&quot;SocialGap.Facebook_PerformLogon(fbLogonSuccess, fbLogonFailure);&quot;&gt;Facebook&lt;/a&gt;</pre></code>
+		 <pre><code>	&lt;a onclick=&quot;SocialGap.Facebook_PerformLogon(fbLogonSuccess, fbLogonFailure);&quot;&gt;
+		Facebook
+	&lt;/a&gt;
+		</pre></code>
 		
 	</li>
 </ul>
