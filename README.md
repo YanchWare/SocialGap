@@ -11,6 +11,7 @@ This software is not intended for production usage as it is because of the follo
 		Facebook long-lived token support needs the app-secret. This should not be deployed on the clients. 
 		In order to use the Facebook API as intended you need to transform short-lived token in long-lived 
 		ones on your servers and then transport the tokens on the clients, where they will be stored.
+		More information: https://developers.facebook.com/docs/facebook-login/access-tokens
 	</li>
 </ol>
 
