@@ -45,12 +45,12 @@ var app = {
         console.log('Received Event: ' + id);
     },
 
-	fbLogonSuccess: function(accessToken)
+	logonSuccess: function(accessToken)
 	{
 		alert(accessToken);
 	},
 	
-	fbLogonFailure: function(){
+	logonFailure: function(){
 		alert('Fail');
 	}
 
