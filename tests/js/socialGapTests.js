@@ -87,3 +87,94 @@ QUnit.test( "SocialGap.checkToken - Negative", function( assert ) {
   });
 });
 
+QUnit.test( "SocialGap.extractInfoFromQueryString - Positive", function( assert ) {
+  var resTest1 = "niceTokenValue";
+  var keyTest1 = "token";
+  var resTest2 = "niceTokenValue2";
+  var keyTest2 = "token2";
+  var resTest3 = "niceTokenValue3";
+  var keyTest3 = "token3";
+
+  var testQueryString = keyTest1+'='+resTest1+'&'+keyTest2+'='+resTest2+'&'+keyTest3+'='+resTest3;
+
+  var test1 = SocialGap.extractInfoFromQueryString(testQueryString, keyTest1);
+  var test2 = SocialGap.extractInfoFromQueryString(testQueryString, keyTest2);
+  var test3 = SocialGap.extractInfoFromQueryString(testQueryString, keyTest3);
+  assert.ok( test1 = resTest1, "Found at the beginning." );
+  assert.ok( test2 = resTest2, "Found in the middle." );
+  assert.ok( test3 = resTest3, "Found at the end." );
+});
+
+QUnit.test( "SocialGap.extractInfoFromQueryString - Negative", function( assert ) {
+  var testQueryString = 'a=dhusahd&auhsuha=aaaa&sas=saassa';
+  var keyTest = "isnotthere";
+  var test = SocialGap.extractInfoFromQueryString(testQueryString, keyTest);
+  assert.ok( test == null, "If not found returns null." );
+});
+
+QUnit.test( "SocialGap.transformToken - Positive", function( assert ) {
+  var passed = false;
+  var method = 'GET';
+  var apiUrl = 'https://graph.facebook.com/oauth';
+  var extFunction = function(content){
+	if(content != null)
+		return true;
+	else return false;
+  };
+  var callback = function(passed){
+	QUnit.start();
+    assert.ok( passed, "Token transformed when return code is HTTP 200 and returned contents are not null." );
+  };
+
+  QUnit.stop();
+  SocialGap.transformToken(method, apiUrl, extFunction, callback);
+});
+
+QUnit.test( "SocialGap.transformToken - Negative", function( assert ) {
+  var passed = false;
+  var method = 'GET';
+  var apiUrl = 'https://graph.facebook.com/';
+  var extFunction = function(content){
+	/* Not called */
+  };
+  var callback = function(passed){
+	QUnit.start();
+    assert.ok( passed == null, "When response is not HTTP 200 it returns null." );
+  };
+
+  QUnit.stop();
+  SocialGap.transformToken(method, apiUrl, extFunction, callback);
+});
+
+QUnit.test( "socialGap.getJsonContents - Positive", function( assert ) {
+  var passed = false;
+
+  QUnit.stop();
+  SocialGap.getJsonContents("https://graph.facebook.com/oauth", function(jsonObj){
+    QUnit.start();
+    assert.ok( jsonObj != null, "Returns the JSon object..." );
+    assert.ok( jsonObj.id != null, "... with all its contents." );
+  });
+});
+
+QUnit.test( "socialGap.getJsonContents - Positive", function( assert ) {
+  var passed = false;
+
+  QUnit.stop();
+  SocialGap.getJsonContents("https://graph.facebook.com", function(jsonObj){
+    QUnit.start();
+    assert.ok( jsonObj != null, "Also in case of HTTP return code != 200 the JSon object is parsed..." );
+    assert.ok( jsonObj.error != null, "... with all its contents." );
+  });
+});
+
+
+QUnit.test( "socialGap.getJsonContents - Negative", function( assert ) {
+  var passed = false;
+
+  QUnit.stop();
+  SocialGap.getJsonContents("", function(jsonObj){
+    QUnit.start();
+    assert.ok( jsonObj == null, "In case of non valid json resource returns null." );
+  });
+});
