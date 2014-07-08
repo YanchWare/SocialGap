@@ -14,8 +14,16 @@
 		<div id="deviceready">
 
 			<div class="received">
-        		<a onclick="SocialGap.Facebook_PerformLogon(app.logonSuccess, app.logonFailure);">Facebook</a>
-        		<a onclick="SocialGap.Linkedin_PerformLogon(app.logonSuccess, app.logonFailure);">Facebook</a>
+				<a onclick="window.location = 'tests/testSocialGap.html';">Run unit tests for SocialGap</a>
+
+				<br>&nbsp;<br>
+
+        		<a onclick="SocialGap.Facebook_PerformLogon(app.logonSuccess, app.logonFailure);">Facebook</a> <br>
+				<a onclick="window.location = 'tests/testFB.html';">Run unit tests for FB extension</a>
+				
+				<br>&nbsp;<br>
+				
+        		<a onclick="SocialGap.Linkedin_PerformLogon(app.logonSuccess, app.logonFailure);">LinkedIn</a>
 			</div>
 		
 			<div class="listening blink">

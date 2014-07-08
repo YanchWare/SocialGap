@@ -3,6 +3,10 @@ QUnit.test( "SocialGap exists", function( assert ) {
   assert.ok( SocialGap && getType.toString.call(SocialGap) == "[object Object]", "SocialGap object exists!" );
 });
 
+QUnit.test( "SocialGap is ready", function( assert ) {
+  assert.ok( SocialGap.deviceReady, "Device is ready." );
+});
+
 QUnit.test( "SocialGap.getStoredToken - Positive", function( assert ) {
   var passed = false;
   var key = "realToken";
