@@ -20,7 +20,7 @@ QUnit.test( "SocialGap.getStoredToken - Positive", function( assert ) {
 	  QUnit.start();
   });
 
-  localStorage.removeItem(value);
+  localStorage.removeItem(key);
 });
 
 QUnit.test( "SocialGap.getStoredToken - Negative", function( assert ) {
@@ -49,7 +49,7 @@ QUnit.test( "SocialGap.storeToken - Positive", function( assert ) {
     assert.ok( passed, "Getting a value from the localStorage works." );
   });
 
-  localStorage.removeItem(value);
+  localStorage.removeItem(key);
 });
 
 QUnit.test( "SocialGap.isFunction", function( assert ) {
