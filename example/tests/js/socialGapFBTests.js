@@ -17,14 +17,6 @@ QUnit.test( "SocialGap FB extension loading", function( assert ) {
   assert.ok( SocialGap.deviceReady, "Device is ready." );
 });
 
-QUnit.test( "socialGap.Facebook_PerformLogon - Negative - Invalid callbacks", function( assert ) {
-  SocialGap.Facebook_PerformLogon();
-  assert.ok( SocialGap.CurrentFBToken == '', "Logon not possible if callbacks are not defined" );
-
-  SocialGap.Facebook_PerformLogon(function(){});
-  assert.ok( SocialGap.CurrentFBToken == '', "Logon not possible if BOTH callbacks are not defined" );
-});
-
 QUnit.test( "socialGap.Facebook_PerformLogon - Positive", function( assert ) {
   SocialGap.Facebook_ChangeSettings(appID, appSecret, appDomain, scopes);
 
@@ -33,16 +25,27 @@ QUnit.test( "socialGap.Facebook_PerformLogon - Positive", function( assert ) {
 	var fbToken = SocialGap.CurrentFBToken;
 	assert.ok(typeof token !== 'undefined' && token.length > 0 && storageToken === token && token === fbToken, 'A token is returned to the caller through the success callback.');
     localStorage.removeItem(LS_TOKEN_KEY);
+	SocialGap.CurrentFBToken = '';
 	QUnit.start();
   };
 
   var failureCallback = function(){
 	assert.ok(false,'The failure callback should not be called at this moment.');
+    localStorage.removeItem(LS_TOKEN_KEY);
+	SocialGap.CurrentFBToken = '';
 	QUnit.start();
   };
 
   QUnit.stop();
   SocialGap.Facebook_PerformLogon(successCallback, failureCallback);
+});
+
+QUnit.test( "socialGap.Facebook_PerformLogon - Negative - Invalid callbacks", function( assert ) {
+  SocialGap.Facebook_PerformLogon();
+  assert.ok( SocialGap.CurrentFBToken == '', "Logon not possible if callbacks are not defined" );
+
+  SocialGap.Facebook_PerformLogon(function(){});
+  assert.ok( SocialGap.CurrentFBToken == '', "Logon not possible if BOTH callbacks are not defined" );
 });
 
 QUnit.test( "socialGap.Facebook_PerformLogon - Positive - Valid token stored and invalid settings", function( assert ) {
