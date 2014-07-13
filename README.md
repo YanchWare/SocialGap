@@ -29,31 +29,16 @@ Once the prerequisites are in place, reference the following js files from your 
 	&lt;script type=&quot;text/javascript&quot; src=&quot;js/SocialGap/socialGap.js&quot;&gt;&lt;/script&gt;
 	&lt;script type=&quot;text/javascript&quot; src=&quot;js/SocialGap/socialGap_facebook.js&quot;&gt;&lt;/script&gt;</code></pre>
 
-Then notify the SocialGap library that the <code>onDeviceReady</code> event has been received.
-This should look something like the following:
-
- <pre><code>	onDeviceReady: function() {
-		...
-		SocialGap.deviceReady = true;
-		....
-    }</code></pre>
-
 From now on the setup procedure differ based on the module you would like to use.
 
 <ul>
 	<li><b>Facebook</b>:<br>
-		Fill out the required settings in the file called <code>socialGap_facebook.js</code>.<br>
-		You need to modify the object called <code>settings</code> that looks like the following:<br>
-		 <pre><code>	/* !!! Modify the following settings !!! */
-	var settings = {
-		appID: "123456789012345",
-		appSecret: "12345678901234567890123456789012",
-		appDomain: "http://yanchware.com",
-		scopes: "email,publish_stream"
-	};</code></pre><br>
+		When deviceready event is received, set up the Facebook extension calling the <code>Facebook_ChangeSettings</code>
+		function as follows:<br>
+		 <pre><code> SocialGap.Facebook_ChangeSettings('appID', 'appSecret', 'fbAppDomain', 'fbScopes');</code></pre><br>
 		
 		Then prepare two callback functions.<br>
-		One of them will be called in case of success receiving as parameter the facebook access token.<br>
+		One of them will be called in case of success receiving as parameter the Facebook access token.<br>
 		Instead, the other will be called in case of failure.
 		 <pre><code>	fbLogonSuccess: function(accessToken)
 	{
@@ -66,10 +51,36 @@ From now on the setup procedure differ based on the module you would like to use
 		
 		Once ready build a link that will start the authentication process.
 		 <pre><code>	&lt;a onclick=&quot;SocialGap.Facebook_PerformLogon(fbLogonSuccess, fbLogonFailure);&quot;&gt;
-		Facebook
+		Logon with Facebook
 	&lt;/a&gt;</code></pre>
 		
 	</li>
+	
+	<li><b>LinkedIn</b>:<br>
+		When deviceready event is received, set up the Facebook extension calling the <code>Facebook_ChangeSettings</code>
+		function as follows:<br>
+		 <pre><code> SocialGap.Linkedin_ChangeSettings('apiKey', 'secretKey', 'ldAppDomain', 'ldScopes');</code></pre><br>
+		
+		Then prepare two callback functions.<br>
+		One of them will be called in case of success receiving as parameter the LinkedIn access token.<br>
+		Instead, the other will be called in case of failure.
+		 <pre><code>	ldLogonSuccess: function(accessToken)
+	{
+		alert(token);
+	}
+
+	ldLogonFailure: function(){
+		alert('Fail');
+	}</code></pre>
+		
+		Once ready build a link that will start the authentication process.
+		 <pre><code>	&lt;a onclick=&quot;SocialGap.Linkedin_PerformLogon(ldLogonSuccess, ldLogonFailure);&quot;&gt;
+		Logon with LinkedIn
+	&lt;/a&gt;</code></pre>
+		
+	</li>
+	
+	
 </ul>
 
 Develop an extension

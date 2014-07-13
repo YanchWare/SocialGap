@@ -38,6 +38,10 @@ var app = {
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
 
+		//Initializing extensions
+		SocialGap.Facebook_ChangeSettings('appID', 'appSecret', 'fbAppDomain', 'fbScopes');
+		SocialGap.Linkedin_ChangeSettings('apiKey', 'secretKey', 'ldAppDomain', 'ldScopes');	  
+
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
