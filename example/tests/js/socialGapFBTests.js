@@ -40,18 +40,11 @@ QUnit.test( "socialGap.Facebook_PerformLogon - Positive", function( assert ) {
   SocialGap.Facebook_PerformLogon(successCallback, failureCallback);
 });
 
-QUnit.test( "socialGap.Facebook_PerformLogon - Negative - Invalid callbacks", function( assert ) {
-  SocialGap.Facebook_PerformLogon();
-  assert.ok( SocialGap.CurrentFBToken == '', "Logon not possible if callbacks are not defined" );
-
-  SocialGap.Facebook_PerformLogon(function(){});
-  assert.ok( SocialGap.CurrentFBToken == '', "Logon not possible if BOTH callbacks are not defined" );
-});
-
 QUnit.test( "socialGap.Facebook_PerformLogon - Positive - Valid token stored and invalid settings", function( assert ) {
   var failureCallback = function(){
 	assert.ok(false,'The failure callback should not be called at this moment.');
     localStorage.removeItem(LS_TOKEN_KEY);
+	SocialGap.CurrentFBToken = '';
 	QUnit.start();
   };
 
@@ -74,6 +67,7 @@ QUnit.test( "socialGap.Facebook_PerformLogon - Positive - Valid token stored and
 		var fbToken = SocialGap.CurrentFBToken;
 		assert.ok(typeof token !== 'undefined' && token != null && token === tokenFromStorage && token === fbToken);
 	    localStorage.removeItem(LS_TOKEN_KEY);
+		SocialGap.CurrentFBToken = '';
 		QUnit.start();
 	  };
 
@@ -81,6 +75,41 @@ QUnit.test( "socialGap.Facebook_PerformLogon - Positive - Valid token stored and
 	
   }, failureCallback);
   
+});
+
+QUnit.test( "socialGap.Facebook_PerformLogon - Positive - Invalid token stored and valid settings", function( assert ) {
+  var value = "GdygsuaygUYUGSAUYGDgaysdgasdyuGUYDSGUA";
+
+  //Setting fake token. This should fail since is not a valid token.
+  localStorage.setItem(LS_TOKEN_KEY, value);
+  SocialGap.Facebook_ChangeSettings(appID, appSecret, appDomain, scopes);
+
+  var successCallback = function(){
+	assert.ok(true, 'The success callback has been called as expected.')
+	assert.ok(SocialGap.CurrentFBToken.length > 0, 'Valid token is available.')
+    localStorage.removeItem(LS_TOKEN_KEY);
+	SocialGap.CurrentFBToken = '';
+	QUnit.start();
+  };
+
+  var failureCallback = function(){
+	assert.ok(false,'The failure callback should not be called at this moment.');
+    localStorage.removeItem(LS_TOKEN_KEY);
+	SocialGap.CurrentFBToken = '';
+	QUnit.start();
+  };
+
+  QUnit.stop();
+  SocialGap.Facebook_PerformLogon(successCallback, failureCallback);
+
+});
+
+QUnit.test( "socialGap.Facebook_PerformLogon - Negative - Invalid callbacks", function( assert ) {
+  SocialGap.Facebook_PerformLogon();
+  assert.ok( SocialGap.CurrentFBToken == '', "Logon not possible if callbacks are not defined" );
+
+  SocialGap.Facebook_PerformLogon(function(){});
+  assert.ok( SocialGap.CurrentFBToken == '', "Logon not possible if BOTH callbacks are not defined" );
 });
 
 QUnit.test( "socialGap.Facebook_PerformLogon - Negative - Invalid settings", function( assert ) {
