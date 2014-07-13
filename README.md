@@ -96,7 +96,7 @@ In order to make the example work follow these steps:
    		<code>phonegap create YourApp/ com.whatever.yourapp YourApp</code></li>
 		<li> Copy the files contained in the <code>example</code> folder into the <code>www</code> folder of the project you've just created</li>
 		<li> Copy the folder <code>Social Gap</code> contained under the <code>lib</code> directory into the folder <code>www/js</code> of the project you have just created.</li>
-		<li>Set the required settings in the modules (for instance in socialGap_facebook.js).</li>
+		<li>Set the required settings for the extension(s) you need as explained above.</li>
 		<li>Install the <a href="https://github.com/apache/cordova-plugin-inappbrowser/blob/master/doc/index.md" target="_blank">inAppBrowser</a> plugin for your project, typing these commands:
 			<pre><code>cd YourApp
 cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git</code></pre>			
