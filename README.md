@@ -57,7 +57,7 @@ From now on the setup procedure differ based on the module you would like to use
 	</li>
 	
 	<li><b>LinkedIn</b>:<br>
-		When deviceready event is received, set up the Facebook extension calling the <code>Facebook_ChangeSettings</code>
+		When deviceready event is received, set up the Facebook extension calling the <code>Linkedin_ChangeSettings</code>
 		function as follows:<br>
 		 <pre><code> SocialGap.Linkedin_ChangeSettings('apiKey', 'secretKey', 'ldAppDomain', 'ldScopes');</code></pre><br>
 		
